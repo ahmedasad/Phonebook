@@ -6,7 +6,7 @@ package app.cansol.phonebook
 //
 //Create Phone Book mobile app using kotlin and MVVM pattern. you can use mockapi.io or any other mock api service for apis.
 //
-//You should create a public github/bitbucket/gitlab repo. Make small commits during your development. Submit repo url.
+// (Done)  You should create a public github/bitbucket/gitlab repo. Make small commits during your development. Submit repo url.
 //
 //Repo must contain readme including how to run your app.
 //
