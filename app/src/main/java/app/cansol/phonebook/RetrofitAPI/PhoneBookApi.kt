@@ -1,4 +1,4 @@
-package app.cansol.phonebook.Network
+package app.cansol.phonebook.RetrofitAPI
 
 import app.cansol.phonebook.Model.Contact
 import retrofit2.Call
@@ -12,7 +12,7 @@ interface PhoneBookApi {
     fun getContacts(@Path("id") id: String): Call<List<Contact>>
 
     @POST("users/{id}/contacts")
-    fun createContact(@Body contact: Contact, @Path("id") userId: String): Call<Contact>
+    fun createContact(@Body contact: Contact, @Path("id") userId: String): Call<List<Contact>>
 
     @PUT("users/{id}/contacts/{contact_id}")
     fun updateContact(

@@ -1,7 +1,8 @@
-package app.cansol.phonebook
+package app.cansol.phonebook.Controllers
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import app.cansol.phonebook.R
 
 class SignIn : AppCompatActivity() {
 

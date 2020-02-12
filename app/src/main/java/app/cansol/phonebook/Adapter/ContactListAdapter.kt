@@ -34,6 +34,9 @@ class ContactListAdapter(val context: Context,val contacts:List<Contact>): Recyc
         }
     }
 
+    fun getContactAt(position: Int):Contact{
+        return contacts.get(position)
+    }
 
 
 }
