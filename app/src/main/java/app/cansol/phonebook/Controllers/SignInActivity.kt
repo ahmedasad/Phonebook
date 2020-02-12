@@ -21,7 +21,6 @@ class SignInActivity : AppCompatActivity(), ResultListener {
         setContentView(R.layout.activity_sign_in)
 
         UserData.initUsers()
-
     }
 
     fun signIn(view: View) {

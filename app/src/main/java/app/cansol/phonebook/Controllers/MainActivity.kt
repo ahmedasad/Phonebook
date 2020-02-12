@@ -26,37 +26,35 @@ import app.cansol.phonebook.R
 class MainActivity : AppCompatActivity() {
     lateinit var contactViewModel: ContactViewModel
     lateinit var contactAdapter: ContactListAdapter
-    lateinit var appData:UserData
+    lateinit var appData: UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         appData = UserData(this)
-        if(appData.userId == ""){
+        if (appData.userId == "") {
             val intent = Intent(this, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
         }
 
-        Toast.makeText(this, "Check ${appData.userId.toString()}", Toast.LENGTH_SHORT).show()
+
         val recView = findViewById<RecyclerView>(R.id.contactRecyclerView)
         recView.layoutManager = LinearLayoutManager(this)
         val context = this
 
         contactViewModel = ViewModelProviders.of(this).get(ContactViewModel::class.java)
-        contactViewModel.getContact(appData.userId.toString())
-        if(Network.checkNetwork(this)) {
-            contactViewModel.allContact.observe(this, object : Observer<List<Contact>> {
-                override fun onChanged(t: List<Contact>?) {
-                    contactAdapter = ContactListAdapter(context, t!!)
-                    recView.adapter = contactAdapter
-                    contactAdapter.notifyDataSetChanged()
-                }
-            })
-        }
-        else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
+        if (Network.checkNetwork(this)) {
+            val observer = Observer<List<Contact>> {
+                contactAdapter = ContactListAdapter(context, it!!)
+                recView.adapter = contactAdapter
+                contactAdapter.notifyDataSetChanged()
+            }
+            contactViewModel.getContact(appData.userId.toString())
+            contactViewModel.allContact.observe(this, observer)
+        } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
 
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -77,14 +75,13 @@ class MainActivity : AppCompatActivity() {
                 builder.show()
                 dialogView.findViewById<TextView>(R.id.txteditCancel).setOnClickListener {
                     contactAdapter.notifyDataSetChanged()
-                    Toast.makeText(context, "nothing happened!", Toast.LENGTH_SHORT).show()
                     builder.dismiss()
                 }
 
                 dialogView.findViewById<TextView>(R.id.txtDelete).setOnClickListener {
                     contactViewModel.deleteContact(
-                        contactAdapter.getContactAt(viewHolder.adapterPosition).id!!,
-                        contactAdapter.getContactAt(viewHolder.adapterPosition).user_id
+                        contactAdapter.getContactAt(viewHolder.adapterPosition),
+                        appData.userId.toString()
                     )
 
                     Toast.makeText(context, "Contact Deleted!", Toast.LENGTH_SHORT).show()
@@ -108,7 +105,8 @@ class MainActivity : AppCompatActivity() {
 
 
                         if (name.text.isNotEmpty() && number.text.isNotEmpty()) {
-                            Toast.makeText(context, "${contact.contact_name}!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "${contact.contact_name}!", Toast.LENGTH_SHORT)
+                                .show()
                             val cont = Contact(
                                 contact.id,
                                 contact.user_id,
@@ -117,13 +115,16 @@ class MainActivity : AppCompatActivity() {
                             )
                             contactViewModel.updateContact(
                                 cont,
-                                contactAdapter.getContactAt(viewHolder.adapterPosition).user_id
+                                appData.userId.toString()
                             )
                             builder.dismiss()
-                        }
-                        else{
+                        } else {
                             contactAdapter.notifyDataSetChanged()
-                            Toast.makeText(context, "Field should not be empty!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Field should not be empty!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
@@ -138,32 +139,27 @@ class MainActivity : AppCompatActivity() {
         }).attachToRecyclerView(recView)
 
 
-
-
     }
 
     fun createContact(view: View) {
-        if(Network.checkNetwork(this)) {
+        if (Network.checkNetwork(this)) {
             val intent = Intent(this, CreateContactActivity::class.java)
             startActivityForResult(intent, 1)
-        }
-        else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK && data != null) {
-            val name = data.getStringExtra("EXTRA_NAME")
+            var name = data.getStringExtra("EXTRA_NAME")
+            name = name.substring(0, 1).toUpperCase() + name.substring(1)
             val number = data.getStringExtra("EXTRA_NUMBER")
             val contact = Contact("", "1", name, number)
-            if(Network.checkNetwork(this)) {
-                contactViewModel.createContact(contact,appData.userId.toString() )
+            if (Network.checkNetwork(this)) {
+                contactViewModel.createContact(contact, appData.userId.toString())
                 Toast.makeText(this, "Contact Saved!", Toast.LENGTH_SHORT).show()
-            }
-            else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Contact not Saved!", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
         }
 
     }

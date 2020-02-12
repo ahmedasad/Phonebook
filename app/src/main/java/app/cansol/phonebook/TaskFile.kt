@@ -12,14 +12,6 @@ package app.cansol.phonebook
 //
 //Mobile App: Should be developed using kotlin and MVVM pattern (Retrofit would be recommended for network calls)
 //
-//App Features:
-//
-//- User Should be able to login (you can hardcode a user)
-//
-//- User can create contact (name and number)
-//
-//- User can edit contact Item.
-//
-//- User can delete contact Item.
+
 //
 //- Code should have properly comments.

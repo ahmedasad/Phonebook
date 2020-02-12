@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controllers.CreateContactActivity"
             android:parentActivityName=".Controllers.MainActivity" />
-        <activity android:name=".Controllers.SignInActivity"/>
+        <activity android:name=".Controllers.SignInActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
             android:name=".Controllers.MainActivity"

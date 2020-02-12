@@ -13,12 +13,18 @@ import app.cansol.phonebook.R
 
 class CreateContactActivity : AppCompatActivity() {
 
+    lateinit var name:EditText
+    lateinit var number:EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_contact)
 
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
         setTitle("Create Contact")
+
+        name = findViewById<EditText>(R.id.edittextName)
+        number = findViewById<EditText>(R.id.edittxtPhoneNum)
 
     }
 
@@ -45,20 +51,19 @@ class CreateContactActivity : AppCompatActivity() {
 
             }
             else -> {
+                if (name.text.isNotEmpty() && number.text.trim().isNotEmpty()) {
+                    Toast.makeText(this,"Contact didn't save",Toast.LENGTH_SHORT).show()
+                }
                 return super.onOptionsItemSelected(item)
             }
         }
     }
 
     private fun saveContact() {
-        val name = findViewById<EditText>(R.id.edittextName).text
-        val number = findViewById<EditText>(R.id.edittxtPhoneNum).text
-        val email = findViewById<EditText>(R.id.edittxtEmail).text
-
-        if (name.isNotEmpty() && number.trim().isNotEmpty() && email.trim().isNotEmpty()) {
+        if (name.text.isNotEmpty() && number.text.trim().isNotEmpty()) {
             val data = Intent()
-            data.putExtra("EXTRA_NAME", "$name")
-            data.putExtra("EXTRA_NUMBER", "$number")
+            data.putExtra("EXTRA_NAME", "${name.text}")
+            data.putExtra("EXTRA_NUMBER", "${number.text}")
             setResult(Activity.RESULT_OK, data)
             finish()
         } else {

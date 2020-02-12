@@ -29,7 +29,8 @@
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="number"
-        android:textAlignment="center"
+        android:drawableLeft="@drawable/ic_person_white"
+        android:drawablePadding="10dp"
         android:textColor="#FAF7F0F0"
         android:textColorHint="#FAD9E0E9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,8 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textAlignment="center"
+        android:drawableLeft="@drawable/ic_key"
+        android:drawablePadding="10dp"
         android:textColor="#FAF7F0F0"
         android:textColorHint="#FAD9E0E9"
         app:layout_constraintEnd_toEndOf="@+id/edTxtSignInPhoneNumber"
@@ -79,7 +81,7 @@
 
     <TextView
         android:id="@+id/txtSignUp"
-        android:layout_width="97dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:clickable="false"

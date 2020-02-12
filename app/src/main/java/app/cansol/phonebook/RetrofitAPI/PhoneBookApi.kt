@@ -16,7 +16,7 @@ interface PhoneBookApi {
     fun getContacts(@Path("id") id: String): Call<List<Contact>>
 
     @POST("users/{id}/contacts")
-    fun createContact(@Body contact: Contact, @Path("id") userId: String): Call<List<Contact>>
+    fun createContact(@Body contact: Contact, @Path("id") userId: String):Call<Contact>
 
     @PUT("users/{id}/contacts/{contact_id}")
     fun updateContact(

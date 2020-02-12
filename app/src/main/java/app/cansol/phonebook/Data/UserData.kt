@@ -9,9 +9,9 @@ object UserData {
 
     var currentUser: User? = null
     fun initUsers() {
-        users.add(User("1", "John", "John@gmail.com", "009234582146", "thisisJohn"))
-        users.add(User("2", "Mike", "mike@gmail.com", "009234582564", "thisisMike"))
-        users.add(User("3", "alex", "alex@gmail.com", "009234582234", "thisisAlex"))
+        users.add(User("1", "John", "John@gmail.com", "03482524444", "thisisJohn"))
+        users.add(User("2", "Mike", "mike@gmail.com", "03482521111", "thisisMike"))
+        users.add(User("3", "alex", "alex@gmail.com", "03482523333", "thisisAlex"))
     }
 
     fun findUser(phoneNumber: String, password: String, listener: ResultListener){
