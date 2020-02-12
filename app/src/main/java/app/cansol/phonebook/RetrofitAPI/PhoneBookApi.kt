@@ -1,12 +1,16 @@
 package app.cansol.phonebook.RetrofitAPI
 
 import app.cansol.phonebook.Model.Contact
+import app.cansol.phonebook.Model.User
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface PhoneBookApi {
+
+    @GET("users")
+    fun getUser():Call<List<User>>
 
     @GET("users/{id}/contacts")
     fun getContacts(@Path("id") id: String): Call<List<Contact>>

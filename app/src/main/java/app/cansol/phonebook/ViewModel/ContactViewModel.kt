@@ -1,13 +1,16 @@
 package app.cansol.phonebook.ViewModel
 
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.cansol.phonebook.Model.Contact
+import app.cansol.phonebook.Model.User
 import app.cansol.phonebook.Repository.ContactRepository
 
 class ContactViewModel: ViewModel() {
-    private lateinit var repository:ContactRepository
+    private var repository:ContactRepository = ContactRepository()
     lateinit var allContact:LiveData<List<Contact>>
 
     fun getContact(id:String){
@@ -27,4 +30,6 @@ class ContactViewModel: ViewModel() {
     fun deleteContact(contactId:String,userId:String){
         repository.deleteCont(userId,contactId)
     }
+
+
 }

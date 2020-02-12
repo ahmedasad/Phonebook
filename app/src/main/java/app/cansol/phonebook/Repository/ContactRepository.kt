@@ -1,8 +1,14 @@
 package app.cansol.phonebook.Repository
 
+import android.content.Context
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import app.cansol.phonebook.Controllers.MainActivity
 import app.cansol.phonebook.Model.Contact
+import app.cansol.phonebook.Model.User
 import app.cansol.phonebook.RetrofitAPI.PhoneBookApi
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,5 +72,6 @@ class ContactRepository {
             }
         })
     }
+
 
 }

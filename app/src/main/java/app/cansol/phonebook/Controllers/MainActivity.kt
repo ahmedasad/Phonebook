@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.cansol.phonebook.Adapter.ContactListAdapter
+import app.cansol.phonebook.AppData.UserData
 import app.cansol.phonebook.ViewModel.ContactViewModel
 import app.cansol.phonebook.Model.Contact
 import app.cansol.phonebook.Network.Network
@@ -23,17 +26,27 @@ import app.cansol.phonebook.R
 class MainActivity : AppCompatActivity() {
     lateinit var contactViewModel: ContactViewModel
     lateinit var contactAdapter: ContactListAdapter
+    lateinit var appData:UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        appData = UserData(this)
+        if(appData.userId == ""){
+            val intent = Intent(this, SignInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
+
+        Toast.makeText(this, "Check ${appData.userId.toString()}", Toast.LENGTH_SHORT).show()
         val recView = findViewById<RecyclerView>(R.id.contactRecyclerView)
         recView.layoutManager = LinearLayoutManager(this)
         val context = this
 
         contactViewModel = ViewModelProviders.of(this).get(ContactViewModel::class.java)
-        contactViewModel.getContact("1")
+        contactViewModel.getContact(appData.userId.toString())
         if(Network.checkNetwork(this)) {
             contactViewModel.allContact.observe(this, object : Observer<List<Contact>> {
                 override fun onChanged(t: List<Contact>?) {
@@ -125,6 +138,8 @@ class MainActivity : AppCompatActivity() {
         }).attachToRecyclerView(recView)
 
 
+
+
     }
 
     fun createContact(view: View) {
@@ -143,7 +158,7 @@ class MainActivity : AppCompatActivity() {
             val number = data.getStringExtra("EXTRA_NUMBER")
             val contact = Contact("", "1", name, number)
             if(Network.checkNetwork(this)) {
-                contactViewModel.createContact(contact, "1")
+                contactViewModel.createContact(contact,appData.userId.toString() )
                 Toast.makeText(this, "Contact Saved!", Toast.LENGTH_SHORT).show()
             }
             else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
@@ -151,6 +166,30 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Contact not Saved!", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = getMenuInflater()
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.logout -> {
+                UserData(this).userId = ""
+                val intent = Intent(this, SignInActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+                return true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }

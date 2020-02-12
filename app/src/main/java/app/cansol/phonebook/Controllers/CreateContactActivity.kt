@@ -5,14 +5,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import app.cansol.phonebook.Model.Contact
 import app.cansol.phonebook.Network.Network
 import app.cansol.phonebook.R
-import app.cansol.phonebook.TempData
 
 class CreateContactActivity : AppCompatActivity() {
 

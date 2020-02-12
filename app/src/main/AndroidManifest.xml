@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controllers.CreateContactActivity"
             android:parentActivityName=".Controllers.MainActivity" />
-        <activity android:name=".Controllers.SignIn"></activity>
+        <activity android:name=".Controllers.SignInActivity"/>
+
         <activity
             android:name=".Controllers.MainActivity"
             android:launchMode="singleTop"
@@ -25,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

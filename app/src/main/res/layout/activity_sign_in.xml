@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".Controllers.SignIn">
+    tools:context=".Controllers.SignInActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/edTxtSignInEmail"
+        android:id="@+id/edTxtSignInPhoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -48,10 +48,10 @@
         android:textAlignment="center"
         android:textColor="#FAF7F0F0"
         android:textColorHint="#FAD9E0E9"
-        app:layout_constraintEnd_toEndOf="@+id/edTxtSignInEmail"
+        app:layout_constraintEnd_toEndOf="@+id/edTxtSignInPhoneNumber"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edTxtSignInEmail"
-        app:layout_constraintTop_toBottomOf="@+id/edTxtSignInEmail" />
+        app:layout_constraintStart_toStartOf="@+id/edTxtSignInPhoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edTxtSignInPhoneNumber" />
 
     <Button
         android:id="@+id/btnSignIn"
@@ -59,6 +59,7 @@
         android:layout_height="43dp"
         android:layout_marginTop="88dp"
         android:background="@drawable/green_button"
+        android:onClick="signIn"
         android:text="Sign In"
         app:layout_constraintEnd_toEndOf="@+id/edTxtSignInPassword"
         app:layout_constraintStart_toStartOf="@+id/edTxtSignInPassword"
