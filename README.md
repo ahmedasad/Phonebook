@@ -2,10 +2,11 @@
 The personalize phone directory to help person maintain contacts info.
 
 <h3>Highlights</h3>
-<p>The application has been built to demonstrate implementation of MVVM architecture with web services using Retrofit. <br/>
+<p>
+  Application developed with Kotlin.<br/>
+  The application has been built to demonstrate implementation of MVVM architecture with web services using Retrofit. <br/>
   It has been designed using Android Architecture components.<br/>
-  The application is built in such a way that whenvever there is a remote service call, the result will be obsereved.<br/>
-  Application developed with Kotlin
+  The application is built in such a way that whenvever there is a remote service call, the result will be obsereved.
 </p>
 
 <h3>Architecture</h3>
