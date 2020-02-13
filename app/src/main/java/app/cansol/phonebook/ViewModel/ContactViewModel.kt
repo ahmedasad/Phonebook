@@ -12,7 +12,11 @@ import app.cansol.phonebook.Repository.ContactRepository
  **/
 class ContactViewModel: ViewModel() {
     private var repository:ContactRepository = ContactRepository()
-    lateinit var allContact:LiveData<List<Contact>>
+    private lateinit var allContact:LiveData<List<Contact>>
+
+    fun list():LiveData<List<Contact>>{
+        return  allContact
+    }
 
     fun getContact(id:String){
         repository = ContactRepository()

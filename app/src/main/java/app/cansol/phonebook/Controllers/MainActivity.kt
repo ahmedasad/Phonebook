@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 contactAdapter.notifyDataSetChanged()
             }
             contactViewModel.getContact(appData.userId.toString())
-            contactViewModel.allContact.observe(this, observer)
+            contactViewModel.list().observe(this, observer)
         } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
 
 
