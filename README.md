@@ -1,12 +1,11 @@
 # Phonebook
-<br/>
 The personalize phone directory to help person main contacts.
 
-# Technicals 
+<h3>Architecture</h3>
 <h6>Design Pattern: MVVM.</h6>
 <h6>Retrofit for Web Services</h6>
 
-# Features
+<h3>App Review</h3>
 <ul>
 <li>user can login in into his account</li>
 <li>User will stay login untill user logout from account himself</li>
@@ -19,8 +18,9 @@ The personalize phone directory to help person main contacts.
 </ul>
 
 
-# Images
-<img src="images/signin.png" width="300" height="500"/> <img src="images/main.jpg" width="300" height="500"/>
+<h3>Images</h3>
+<img src="images/signin.png" width="300" height="500"/>
+<img src="images/main.jpg" width="300" height="500"/>
 <img src="images/create.jpg" width="300" height="500"/>
 <img src="images/menu.jpg" width="300" height="500"/>
 <img src="images/edit.jpg" width="300" height="500"/>
