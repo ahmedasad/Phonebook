@@ -1,5 +1,5 @@
 # Phonebook
-The personalize phone directory to help person main contacts.
+The personalize phone directory to help person maintain contacts info.
 
 <h3>Highlights</h3>
 <p>The application has been built to demonstrate implementation of MVVM architecture with web services using Retrofit. <br/>
