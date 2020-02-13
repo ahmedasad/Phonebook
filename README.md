@@ -1,8 +1,12 @@
 # Phonebook
 <br/>
 The personalize phone directory to help person main contacts.
-# Features
 
+# Technicals 
+<h6>Design Pattern: MVVM.</h6>
+<h6>Retrofit for Web Services</h6>
+
+# Features
 <ul>
 <li>user can login in into his account</li>
 <li>User will stay login untill user logout from account himself</li>
