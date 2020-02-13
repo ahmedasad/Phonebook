@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import app.cansol.phonebook.Model.Contact
 import app.cansol.phonebook.R
 
+/**
+ Contact Adapter using Recycler View
+ **/
+
 class ContactListAdapter(val context: Context,val contacts:List<Contact>): RecyclerView.Adapter<ContactListAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(context).inflate(R.layout.contact_layout,parent,false)
@@ -34,6 +38,9 @@ class ContactListAdapter(val context: Context,val contacts:List<Contact>): Recyc
         }
     }
 
+    /**
+     the function is used to return the contact on certain index/position
+     **/
     fun getContactAt(position: Int):Contact{
         return contacts.get(position)
     }

@@ -1,5 +1,7 @@
 package app.cansol.phonebook.Repository
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.cansol.phonebook.Model.Contact
@@ -8,6 +10,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+/**
+ * Repository class one of the component of MVVM
+ * it will communicate with web services for crud operations
+ * **/
 class ContactRepository {
 
     private val responseContact = MutableLiveData<List<Contact>>()
@@ -19,9 +26,7 @@ class ContactRepository {
 
     fun getAllContacts(id:String):LiveData<List<Contact>>{
         PhoneBookApi().getContacts(id).enqueue(object:Callback<List<Contact>>{
-            override fun onFailure(call: Call<List<Contact>>, t: Throwable) {
-
-            }
+            override fun onFailure(call: Call<List<Contact>>, t: Throwable) {}
 
             override fun onResponse(call: Call<List<Contact>>, response: Response<List<Contact>>) {
                 if(!response.isSuccessful) return
@@ -37,9 +42,7 @@ class ContactRepository {
     fun createContact(contact:Contact,userId:String){
         PhoneBookApi()
             .createContact(contact,userId).enqueue(object : Callback<Contact>{
-                override fun onFailure(call: Call<Contact>, t: Throwable) {
-
-                }
+                override fun onFailure(call: Call<Contact>, t: Throwable) {}
 
                 override fun onResponse(call: Call<Contact>, response: Response<Contact>) {
                     if(!response.isSuccessful) {
@@ -49,7 +52,6 @@ class ContactRepository {
                     contactList.add(response.body()!!)
                     responseContact.value = contactList.sortedWith(compareBy({it.contact_name}))
                     println("done....")
-
                 }
 
             })

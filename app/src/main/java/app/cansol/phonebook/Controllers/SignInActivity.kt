@@ -6,16 +6,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
-import app.cansol.phonebook.Data.UserData
+import app.cansol.phonebook.AppData.UserData
 import app.cansol.phonebook.Interface.ResultListener
-import app.cansol.phonebook.Model.User
 import app.cansol.phonebook.Network.Network
 import app.cansol.phonebook.R
-import app.cansol.phonebook.ViewModel.ContactViewModel
 
 class SignInActivity : AppCompatActivity(), ResultListener {
 
+    /**
+     initialize hardcoded users in oncreate method**/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -23,6 +22,9 @@ class SignInActivity : AppCompatActivity(), ResultListener {
         UserData.initUsers()
     }
 
+    /**
+    it simply call the method from for searching user against provided credentials
+     **/
     fun signIn(view: View) {
         val number = findViewById<EditText>(R.id.edTxtSignInPhoneNumber).text
         val password = findViewById<EditText>(R.id.edTxtSignInPassword).text
@@ -35,8 +37,11 @@ class SignInActivity : AppCompatActivity(), ResultListener {
 
     }
 
+    /**
+     following both are Interface method implementation
+     **/
     override fun onSuccess(message: String) {
-        app.cansol.phonebook.AppData.UserData(this).userId = UserData.currentUser!!.id
+        app.cansol.phonebook.AppData.AppData(this).userId = UserData.currentUser!!.id
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

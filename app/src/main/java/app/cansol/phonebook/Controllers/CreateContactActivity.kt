@@ -13,6 +13,9 @@ import app.cansol.phonebook.R
 
 class CreateContactActivity : AppCompatActivity() {
 
+    /**
+     two fields for contact creation
+     **/
     lateinit var name:EditText
     lateinit var number:EditText
 
@@ -20,11 +23,12 @@ class CreateContactActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_contact)
 
+
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
         setTitle("Create Contact")
 
-        name = findViewById<EditText>(R.id.edittextName)
-        number = findViewById<EditText>(R.id.edittxtPhoneNum)
+        name = findViewById(R.id.edittextName)
+        number = findViewById(R.id.edittxtPhoneNum)
 
     }
 
@@ -59,6 +63,8 @@ class CreateContactActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     takes data from edittext fields and send them through intent using putExtra function**/
     private fun saveContact() {
         if (name.text.isNotEmpty() && number.text.trim().isNotEmpty()) {
             val data = Intent()

@@ -6,6 +6,9 @@ import android.net.NetworkInfo
 import androidx.core.content.ContextCompat
 import java.lang.NullPointerException
 
+
+/**
+ * This will check if device hase network connection or not**/
 object Network {
     fun checkNetwork(context: Context):Boolean {
         try {

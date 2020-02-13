@@ -17,22 +17,33 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.cansol.phonebook.Adapter.ContactListAdapter
-import app.cansol.phonebook.AppData.UserData
+import app.cansol.phonebook.AppData.AppData
 import app.cansol.phonebook.ViewModel.ContactViewModel
 import app.cansol.phonebook.Model.Contact
 import app.cansol.phonebook.Network.Network
 import app.cansol.phonebook.R
 
 class MainActivity : AppCompatActivity() {
+
+    /**
+     Following variables will initialize in onCreate()
+     **/
     lateinit var contactViewModel: ContactViewModel
     lateinit var contactAdapter: ContactListAdapter
-    lateinit var appData: UserData
+    lateinit var appData: AppData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        appData = UserData(this)
+        val context = this
+
+        /**
+         initializations of sharedPreference class
+          **/
+        appData = AppData(this)
+
+       //checking if user is already logged in or not
         if (appData.userId == "") {
             val intent = Intent(this, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -41,10 +52,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        // recyclerView from layout and assigning layoutManager
         val recView = findViewById<RecyclerView>(R.id.contactRecyclerView)
         recView.layoutManager = LinearLayoutManager(this)
-        val context = this
 
+        // getting view model class from ViewModelProviders
         contactViewModel = ViewModelProviders.of(this).get(ContactViewModel::class.java)
         if (Network.checkNetwork(this)) {
             val observer = Observer<List<Contact>> {
@@ -57,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
 
 
+        // Touch Listener for recyclerview item swapping
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -67,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Inflating layout for alert dialog
                 val builder = AlertDialog.Builder(context).create()
                 val dialogView = LayoutInflater.from(context).inflate(R.layout.contact_menu, null)
                 val editView =
@@ -87,8 +101,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(context, "Contact Deleted!", Toast.LENGTH_SHORT).show()
                     builder.dismiss()
                 }
+                // When edit option is chosen from Alert dialog menu
                 dialogView.findViewById<TextView>(R.id.txtEdit).setOnClickListener {
-                    Toast.makeText(context, "Contact !", Toast.LENGTH_SHORT).show()
                     builder.dismiss()
 
                     val builder = AlertDialog.Builder(context).create()
@@ -105,12 +119,13 @@ class MainActivity : AppCompatActivity() {
 
 
                         if (name.text.isNotEmpty() && number.text.isNotEmpty()) {
-                            Toast.makeText(context, "${contact.contact_name}!", Toast.LENGTH_SHORT)
+                            Toast.makeText(context, "Save", Toast.LENGTH_SHORT)
                                 .show()
+                            val n = name.text.toString().substring(0,1).toUpperCase()+ name.text.toString().substring(1)
                             val cont = Contact(
                                 contact.id,
                                 contact.user_id,
-                                name.text.toString(),
+                                n,
                                 number.text.toString()
                             )
                             contactViewModel.updateContact(
@@ -135,12 +150,16 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
+                contactAdapter.notifyDataSetChanged()
             }
         }).attachToRecyclerView(recView)
 
 
     }
 
+    /**
+     starting activity to create new contact
+     **/
     fun createContact(view: View) {
         if (Network.checkNetwork(this)) {
             val intent = Intent(this, CreateContactActivity::class.java)
@@ -148,13 +167,16 @@ class MainActivity : AppCompatActivity() {
         } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     the following function get the results and evaluating them and then calling ViewModel to create contact and perform related operations
+     **/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK && data != null) {
             var name = data.getStringExtra("EXTRA_NAME")
-            name = name.substring(0, 1).toUpperCase() + name.substring(1)
             val number = data.getStringExtra("EXTRA_NUMBER")
+            name = name.substring(0, 1).toUpperCase() + name.substring(1)
             val contact = Contact("", "1", name, number)
             if (Network.checkNetwork(this)) {
                 contactViewModel.createContact(contact, appData.userId.toString())
@@ -164,18 +186,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     the menu from resource file inflating into action bar
+     **/
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = getMenuInflater()
         menuInflater.inflate(R.menu.main_activity_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     perform action on choosing option from menu inflated into actionbar
+     **/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
             R.id.logout -> {
-                UserData(this).userId = ""
+                AppData(this).userId = ""
                 val intent = Intent(this, SignInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
