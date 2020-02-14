@@ -12,6 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,14 +59,18 @@ class MainActivity : AppCompatActivity() {
         recView.layoutManager = LinearLayoutManager(this)
 
         // getting view model class from ViewModelProviders
-        contactViewModel = ViewModelProviders.of(this).get(ContactViewModel::class.java)
+
         if (Network.checkNetwork(this)) {
+        contactViewModel = ViewModelProviders.of(this,object: ViewModelProvider.Factory{
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return ContactViewModel(appData.userId.toString()) as T
+            }
+        }).get(ContactViewModel::class.java)
             val observer = Observer<List<Contact>> {
                 contactAdapter = ContactListAdapter(context, it!!)
                 recView.adapter = contactAdapter
                 contactAdapter.notifyDataSetChanged()
             }
-            contactViewModel.getContact(appData.userId.toString())
             contactViewModel.list().observe(this, observer)
         } else Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show()
 

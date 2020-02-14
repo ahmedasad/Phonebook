@@ -10,15 +10,15 @@ import app.cansol.phonebook.Repository.ContactRepository
  * it communicate with repository
  * and also provide necessary data UI to display accordingly
  **/
-class ContactViewModel: ViewModel() {
+class ContactViewModel(id:String): ViewModel() {
     private var repository:ContactRepository = ContactRepository()
-    private lateinit var allContact:LiveData<List<Contact>>
+    private var allContact:LiveData<List<Contact>>
 
     fun list():LiveData<List<Contact>>{
         return  allContact
     }
 
-    fun getContact(id:String){
+    init{
         repository = ContactRepository()
         allContact = repository.getAllContacts(id)
 
