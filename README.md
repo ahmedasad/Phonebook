@@ -7,19 +7,19 @@ The contacts are arranged in ALPHABETIC order
   Application developed with Kotlin.<br/>
   The application has been built to demonstrate implementation of MVVM architecture with web services using Retrofit. <br/>
   It has been designed using Android Architecture components.<br/>
-  The application is built in such a way that whenvever there is a remote service call, the result will be obsereved.
+  The application is built in such a way that whenever there is a remote service call, the result will be observed.
 </p>
 
 <h3>Architecture</h3>
 <p>The whole application is built based on the MVVM architectural pattern.<br/>
-The main advatage of using MVVM, there is no two way dependency between ViewModel and Model unlike MVP. Here the view can observe the datachanges in the viewmodel as we are using <b>LiveData</b> which is lifecycle aware. The viewmodel to view communication is achieved through <b>Observer Pattern</b> (basically observing the state changes of the data in the viewmodel).
+The main advantage of using MVVM, there is no two way dependency between ViewModel and Model unlike MVP. Here the view can observe the data changes in the viewmodel as we are using <b>LiveData</b> which is lifecycle aware. The viewmodel to view communication is achieved through <b>Observer Pattern</b> (basically observing the state changes of the data in the viewmodel).
 </p>
 <img src="Image.jpg"  width="400" height="400"/>
 
 <h3>App Review</h3>
 <ul>
 <li>user can login in into his account</li>
-<li>User will stay login untill user logout from account himself</li>
+<li>User will stay login until user logout from account himself</li>
 <li>Application will keep checking for internet connection to avoid any crash during operations</li>
 <li>user can view all the contacts</li>
 <li>User can create new contact</li>
