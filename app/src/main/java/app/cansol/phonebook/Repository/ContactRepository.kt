@@ -20,10 +20,6 @@ class ContactRepository {
     private val responseContact = MutableLiveData<List<Contact>>()
     private val contactList = ArrayList<Contact>()
 
-    fun list():LiveData<List<Contact>>{
-        return responseContact
-    }
-
     fun getAllContacts(id:String):LiveData<List<Contact>>{
         PhoneBookApi().getContacts(id).enqueue(object:Callback<List<Contact>>{
             override fun onFailure(call: Call<List<Contact>>, t: Throwable) {}
@@ -39,7 +35,7 @@ class ContactRepository {
         return responseContact
     }
 
-    fun createContact(contact:Contact,userId:String){
+    fun createContact(contact:Contact,userId:String):LiveData<List<Contact>>{
         PhoneBookApi()
             .createContact(contact,userId).enqueue(object : Callback<Contact>{
                 override fun onFailure(call: Call<Contact>, t: Throwable) {}
@@ -55,9 +51,10 @@ class ContactRepository {
                 }
 
             })
+        return responseContact
     }
 
-    fun updateContact(contact:Contact,userId:String){
+    fun updateContact(contact:Contact,userId:String):LiveData<List<Contact>>{
         PhoneBookApi()
             .updateContact(contact,userId,contact.id!!).enqueue(object: Callback<Contact>{
             override fun onFailure(call: Call<Contact>, t: Throwable) {}
@@ -71,9 +68,10 @@ class ContactRepository {
                 responseContact.value = contactList.sortedWith(compareBy({it.contact_name}))
             }
         })
+        return responseContact
     }
 
-    fun deleteCont(userId:String,contact:Contact){
+    fun deleteCont(userId:String,contact:Contact):LiveData<List<Contact>>{
         PhoneBookApi()
             .deleteContact(userId,contact.id!!).enqueue(object: Callback<Unit>{
             override fun onFailure(call: Call<Unit>, t: Throwable) {}
@@ -87,6 +85,7 @@ class ContactRepository {
 
             }
         })
+        return responseContact
     }
 
 

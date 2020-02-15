@@ -25,21 +25,17 @@ class ContactViewModel(id:String): ViewModel() {
     }
 
     fun createContact(contact:Contact,userId:String){
-        repository.createContact(contact,userId)
-        allContact = repository.list()
+        allContact = repository.createContact(contact,userId)
+
     }
 
     fun updateContact(contact:Contact,userId:String){
-        repository.updateContact(contact,userId)
-        allContact = repository.list()
+        allContact = repository.updateContact(contact,userId)
 
     }
 
     fun deleteContact(contact:Contact,userId:String){
-        repository.deleteCont(userId,contact)
-        allContact = repository.list()
+        allContact = repository.deleteCont(userId,contact)
 
     }
-
-
 }
