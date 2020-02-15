@@ -1,5 +1,6 @@
 # Phonebook
 The personalize phone directory to help person maintain contacts info.
+The contacts are arranged in ALPHABETIC order
 
 <h3>Highlights</h3>
 <p>
